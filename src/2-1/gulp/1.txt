@@ -1,0 +1,73 @@
+yarn run v1.22.4
+$ /Users/chenzhida/Documents/git/tttt/src/2-1/gulp/node_modules/.bin/gulp deploy
+[00:14:49] Using gulpfile ~/Documents/git/tttt/src/2-1/gulp/gulpfile.js
+[00:14:49] Starting 'deploy'...
+[00:14:49] Starting 'delRemoteFile'...
+[00:14:49] Starting 'clean'...
+[00:14:49] Finished 'delRemoteFile' after 10 ms
+[00:14:49] Finished 'clean' after 48 ms
+[00:14:49] Starting 'image'...
+[00:14:49] Starting 'font'...
+[00:14:49] Starting 'extra'...
+[00:14:49] Starting 'style'...
+[00:14:49] Starting 'page'...
+[00:14:49] Starting 'script'...
+[00:14:50] Finished 'extra' after 1.09 s
+[00:14:50] Finished 'page' after 1.09 s
+[00:14:50] Finished 'script' after 1.09 s
+[00:14:50] Finished 'image' after 1.1 s
+[00:14:50] Finished 'style' after 1.09 s
+[00:14:50] Starting 'useref'...
+[00:14:50] Finished 'font' after 1.58 s
+[00:14:50] gulp-ssh :: shell :: rm -f /home/html/tmp
+
+[00:14:55] Finished 'useref' after 5.54 s
+[00:14:55] Starting 'deploy1'...
+[00:14:55] Finished 'deploy1' after 2.97 ms
+[00:14:55] Finished 'deploy' after 6.7 s
+[00:14:55] "[36m/Users/chenzhida/Documents/git/tttt/src/2-1/gulp/dist[39m" has no content. Skipping.
+[00:14:56] Preparing to write "[36m/home/html/tmp/about.html[39m"
+[00:14:56] Writing '[36m/home/html/tmp/about.html[39m'
+[00:14:56] Finished writing '[36m/home/html/tmp/about.html[39m'
+[00:14:56] "[36m/Users/chenzhida/Documents/git/tttt/src/2-1/gulp/dist/assets[39m" has no content. Skipping.
+[00:14:56] Preparing to write "[36m/home/html/tmp/favicon.ico[39m"
+[00:14:56] Writing '[36m/home/html/tmp/favicon.ico[39m'
+[00:14:56] Finished writing '[36m/home/html/tmp/favicon.ico[39m'
+[00:14:56] Preparing to write "[36m/home/html/tmp/index.html[39m"
+[00:14:56] Writing '[36m/home/html/tmp/index.html[39m'
+[00:14:56] Finished writing '[36m/home/html/tmp/index.html[39m'
+[00:14:56] "[36m/Users/chenzhida/Documents/git/tttt/src/2-1/gulp/dist/assets/fonts[39m" has no content. Skipping.
+[00:14:56] "[36m/Users/chenzhida/Documents/git/tttt/src/2-1/gulp/dist/assets/images[39m" has no content. Skipping.
+[00:14:56] "[36m/Users/chenzhida/Documents/git/tttt/src/2-1/gulp/dist/assets/scripts[39m" has no content. Skipping.
+[00:14:56] "[36m/Users/chenzhida/Documents/git/tttt/src/2-1/gulp/dist/assets/styles[39m" has no content. Skipping.
+[00:14:56] Preparing to write "[36m/home/html/tmp/assets/fonts/pages.eot[39m"
+[00:14:56] Writing '[36m/home/html/tmp/assets/fonts/pages.eot[39m'
+[00:14:56] Finished writing '[36m/home/html/tmp/assets/fonts/pages.eot[39m'
+[00:14:56] Preparing to write "[36m/home/html/tmp/assets/fonts/pages.svg[39m"
+[00:14:56] Writing '[36m/home/html/tmp/assets/fonts/pages.svg[39m'
+[00:14:56] Finished writing '[36m/home/html/tmp/assets/fonts/pages.svg[39m'
+[00:14:56] Preparing to write "[36m/home/html/tmp/assets/fonts/pages.ttf[39m"
+[00:14:56] Writing '[36m/home/html/tmp/assets/fonts/pages.ttf[39m'
+[00:14:56] Finished writing '[36m/home/html/tmp/assets/fonts/pages.ttf[39m'
+[00:14:56] Preparing to write "[36m/home/html/tmp/assets/fonts/pages.woff[39m"
+[00:14:56] Writing '[36m/home/html/tmp/assets/fonts/pages.woff[39m'
+[00:14:56] Finished writing '[36m/home/html/tmp/assets/fonts/pages.woff[39m'
+[00:14:56] Preparing to write "[36m/home/html/tmp/assets/images/brands.svg[39m"
+[00:14:56] Writing '[36m/home/html/tmp/assets/images/brands.svg[39m'
+[00:14:56] Finished writing '[36m/home/html/tmp/assets/images/brands.svg[39m'
+[00:14:56] Preparing to write "[36m/home/html/tmp/assets/images/logo.png[39m"
+[00:14:56] Writing '[36m/home/html/tmp/assets/images/logo.png[39m'
+[00:14:57] Finished writing '[36m/home/html/tmp/assets/images/logo.png[39m'
+[00:14:57] Preparing to write "[36m/home/html/tmp/assets/scripts/main.js[39m"
+[00:14:57] Writing '[36m/home/html/tmp/assets/scripts/main.js[39m'
+[00:14:57] Finished writing '[36m/home/html/tmp/assets/scripts/main.js[39m'
+[00:14:57] Preparing to write "[36m/home/html/tmp/assets/scripts/vendor.js[39m"
+[00:14:57] Writing '[36m/home/html/tmp/assets/scripts/vendor.js[39m'
+[00:14:59] Finished writing '[36m/home/html/tmp/assets/scripts/vendor.js[39m'
+[00:14:59] Preparing to write "[36m/home/html/tmp/assets/styles/main.css[39m"
+[00:14:59] Writing '[36m/home/html/tmp/assets/styles/main.css[39m'
+[00:14:59] Finished writing '[36m/home/html/tmp/assets/styles/main.css[39m'
+[00:14:59] Preparing to write "[36m/home/html/tmp/assets/styles/vendor.css[39m"
+[00:14:59] Writing '[36m/home/html/tmp/assets/styles/vendor.css[39m'
+[00:15:01] Finished writing '[36m/home/html/tmp/assets/styles/vendor.css[39m'
+Done in 14.17s.
