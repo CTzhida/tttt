@@ -1,30 +1,31 @@
-const sass = require("sass");
-const loadGruntTasks = require("load-grunt-tasks");
-// const mozjpeg = require("imagemin-mozjpeg");
-const browserSync = require("browser-sync").create();
+const sass = require('sass');
+const loadGruntTasks = require('load-grunt-tasks');
+// const mozjpeg = require('imagemin-mozjpeg');
+const browserSync = require('browser-sync').create();
 
 module.exports = (grunt) => {
   grunt.initConfig({
     clean: {
-      release: ["dist","temp"],
+      release: ['dist','temp'],
     },
     sass: {
       options: {
         implementation: sass,
+        sourceMap: true
       },
       main: {
         files: {
-          "temp/assets/styles/main.css": "src/assets/styles/main.scss",
+          'temp/assets/styles/main.css': 'src/assets/styles/main.scss',
         },
       },
     },
     babel: {
       options: {
-        presets: ["@babel/preset-env"],
+        presets: ['@babel/preset-env'],
       },
       main: {
         files: {
-          "temp/assets/scripts/main.js": "src/assets/scripts/main.js",
+          'temp/assets/scripts/main.js': 'src/assets/scripts/main.js',
         },
       },
     },
@@ -33,36 +34,36 @@ module.exports = (grunt) => {
         defaultContext: {
           menus: [
             {
-              name: "Home",
-              icon: "aperture",
-              link: "index.html",
+              name: 'Home',
+              icon: 'aperture',
+              link: 'index.html',
             },
             {
-              name: "Features",
-              link: "features.html",
+              name: 'Features',
+              link: 'features.html',
             },
             {
-              name: "About",
-              link: "about.html",
+              name: 'About',
+              link: 'about.html',
             },
             {
-              name: "Contact",
-              link: "#",
+              name: 'Contact',
+              link: '#',
               children: [
                 {
-                  name: "Twitter",
-                  link: "https://twitter.com/w_zce",
+                  name: 'Twitter',
+                  link: 'https://twitter.com/w_zce',
                 },
               ],
             },
           ],
-          pkg: require("./package.json"),
+          pkg: require('./package.json'),
           date: new Date(),
         },
       },
       production: {
-        dest: "temp",
-        src: ["src/**/**.html"],
+        dest: 'temp',
+        src: ['src/**/**.html'],
       },
     },
     // imagemin: {
@@ -70,17 +71,27 @@ module.exports = (grunt) => {
     //     files: [
     //       {
     //         expand: true,
-    //         cwd: "src/assets/",
-    //         src: ["{fonts,images}/*"],
-    //         dest: "dist/",
+    //         cwd: 'src/assets/',
+    //         src: ['{fonts,images}/*'],
+    //         dest: 'dist/',
     //       },
     //     ],
     //   },
     // },
     copy: {
+      // options: {
+      //   separator: ': ',
+      //   punctuation: ' !!!',
+      // },
+      // files: {
+      //   'dist/assets': ['src/assets/fonts/*', 'src/assets/images/*'],
+      // },
+  
       main: {
         files: [
-          { expand: true, src: ["public/*"], dest: "dist/" },
+          { expand: true, src: ['public/*'], dest: 'dist/' },
+          { expand: true, src: ['src/assets/images/*'], dest: 'dist' },
+          { expand: true, src: ['src/assets/fonts/*'], dest: 'dist' },
         ],
       },
     },
@@ -94,31 +105,47 @@ module.exports = (grunt) => {
         tasks: ['babel']
       },
       page:{
-        files:"src/*.html",
+        files:'src/*.html',
         tasks: ['swigtemplates']
       },
       imagefontmin:{
-        files:["src/assets/images/**","src/assets/fonts/**"],
+        files:['src/assets/images/**','src/assets/fonts/**'],
         tasks:['imagefontmin']
       },
       extra:{
-        files:"public/**",
+        files:'public/**',
         task:['copy']
       }
     },
     browserSync: {
+      options: {
+        notify: false,
+        server: {
+          baseDir: ['dist', 'src', 'public'],
+          routes: {
+            '/node_modules': 'node_modules'
+          }
+        }
+      },
       dev: {
         bsFiles: {
           src: ['dist/**']
         },
         options: {
-          watchTask: true,
-          server: 'dist/src'
+          watchTask: true
+        }
+      },
+      start: {
+        bsFiles: {
+          src: 'dist'
+        },
+        options: {
+          watchTask: false
         }
       }
     },
     useref: {
-      html: "dist/**/*.html",
+      html: 'dist/**/*.html',
     },
     htmlmin: {
       dist: {
@@ -129,9 +156,9 @@ module.exports = (grunt) => {
         files: [
           {
             expand: true,
-            cwd: "temp",
-            src: "**/*.html",
-            dest: "dist",
+            cwd: 'temp',
+            src: '**/*.html',
+            dest: 'dist',
           },
         ],
       },
@@ -139,7 +166,7 @@ module.exports = (grunt) => {
     uglify: {
       my_target: {
         files: {
-          "dist/assets/scripts/main.min.js": "temp/assets/scripts/main.js",
+          'dist/assets/scripts/main.min.js': 'temp/assets/scripts/*.js',
         },
       },
     },
@@ -148,10 +175,10 @@ module.exports = (grunt) => {
         files: [
           {
             expand: true,
-            cwd: "temp/assets/styles",
-            src: ["*.css", "!*.min.css"],
-            dest: "dist/assets/styles",
-            ext: ".min.css",
+            cwd: 'temp/assets/styles',
+            src: ['*.css', '!*.min.css'],
+            dest: 'dist/assets/styles',
+            ext: '.min.css',
           },
         ],
       },
@@ -161,18 +188,37 @@ module.exports = (grunt) => {
   loadGruntTasks(grunt);
   grunt.loadNpmTasks('grunt-browser-sync');
 
-  grunt.registerTask("imagefontmin", ["imagefontmin"]);
+  grunt.registerTask('compile', [
+    'clean',
+    'sass',
+    'babel',
+    'swigtemplates'
+  ])
 
-  grunt.registerTask('serve',['browserSync','watch']);
-  grunt.registerTask('userefPack', ['useref', 'uglify', 'cssmin','htmlmin'])
-  grunt.registerTask("compile", ["sass", "babel", "swigtemplates"]);
-  grunt.registerTask("build", ["clean", "compile", "userefPack","copy"]); //'imagemin',
-  grunt.registerTask("develop", ["compile", "serve"]);
-  grunt.registerTask("lint", ["compile", "serve"]);
-  grunt.registerTask("deploy", ["compile", "serve"]);
-  grunt.registerTask("start", ["compile", "serve"]);
+  grunt.registerTask('serve', [
+    'compile',
+    'browserSync:dev',
+    'watch'
+  ])
 
-  
+  grunt.registerTask('userefPack', [
+    'useref', 
+    'uglify', 
+    'cssmin',
+    'htmlmin'
+  ])
 
+  grunt.registerTask('build',[
+    'clean',
+    'compile',
+    // 'imagemin',
+    'userefPack',
+    'copy'
+  ])
 
+  grunt.registerTask('start', [
+    'clean',
+    'compile',
+    'browserSync:start'
+  ])
 };
