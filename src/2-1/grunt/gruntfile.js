@@ -1,68 +1,69 @@
-const sass = require("sass");
-const loadGruntTasks = require("load-grunt-tasks");
-// const mozjpeg = require("imagemin-mozjpeg");
-const browserSync = require("browser-sync").create();
+const sass = require('sass');
+const loadGruntTasks = require('load-grunt-tasks');
+// const mozjpeg = require('imagemin-mozjpeg');
+const browserSync = require('browser-sync').create();
 
 module.exports = (grunt) => {
   grunt.initConfig({
-    clean: {
-      release: ["dist","temp"],
+    clean: { // 需要清楚的路径
+      release: ['dist','temp'],
     },
-    sass: {
+    sass: {  
       options: {
         implementation: sass,
+        sourceMap: true
       },
       main: {
-        files: {
-          "temp/assets/styles/main.css": "src/assets/styles/main.scss",
+        files: { // 目标路径和源文件路径
+          'temp/assets/styles/main.css': 'src/assets/styles/main.scss',
         },
       },
     },
     babel: {
-      options: {
-        presets: ["@babel/preset-env"],
+      options: { //使用哪个版本的babel
+        presets: ['@babel/preset-env'],
       },
       main: {
         files: {
-          "temp/assets/scripts/main.js": "src/assets/scripts/main.js",
+          'temp/assets/scripts/main.js': 'src/assets/scripts/main.js',
         },
       },
     },
     swigtemplates: {
       options: {
-        defaultContext: {
+        defaultContext: { // 需要插入的模板数据
           menus: [
             {
-              name: "Home",
-              icon: "aperture",
-              link: "index.html",
+              name: 'Home',
+              icon: 'aperture',
+              link: 'index.html',
             },
             {
-              name: "Features",
-              link: "features.html",
+              name: 'Features',
+              link: 'features.html',
             },
             {
-              name: "About",
-              link: "about.html",
+              name: 'About',
+              link: 'about.html',
             },
             {
-              name: "Contact",
-              link: "#",
+              name: 'Contact',
+              link: '#',
               children: [
                 {
-                  name: "Twitter",
-                  link: "https://twitter.com/w_zce",
+                  name: 'Twitter',
+                  link: 'https://twitter.com/w_zce',
                 },
               ],
             },
           ],
-          pkg: require("./package.json"),
+          pkg: require('./package.json'),
           date: new Date(),
         },
       },
       production: {
-        dest: "temp",
-        src: ["src/**/**.html"],
+        dest: 'temp',
+        src: ['src/**/**.html'],
       },
     },
     // imagemin: {
@@ -70,9 +71,9 @@ module.exports = (grunt) => {
     //     files: [
     //       {
     //         expand: true,
-    //         cwd: "src/assets/",
-    //         src: ["{fonts,images}/*"],
-    //         dest: "dist/",
+    //         cwd: 'src/assets/',
+    //         src: ['{fonts,images}/*'],
+    //         dest: 'dist/',
     //       },
     //     ],
     //   },
@@ -80,11 +81,15 @@ module.exports = (grunt) => {
     copy: {
       main: {
         files: [
-          { expand: true, src: ["public/*"], dest: "dist/" },
+          { expand: true, src: ['public/*'], dest: 'dist/' },
+          // 因imagemin安装不了，暂时直接复制处理
+          { expand: true, src: ['src/assets/images/*'], dest: 'dist' },
+          { expand: true, src: ['src/assets/fonts/*'], dest: 'dist' },
         ],
       },
     },
     watch: {
+      // 检测文件变化，files为目标文件的通配符，tasks为变化之后需要进行的任务
       sass:{
         files: 'src/assets/styles/*.scss',
         tasks: ['sass']
@@ -94,44 +99,60 @@ module.exports = (grunt) => {
         tasks: ['babel']
       },
       page:{
-        files:"src/*.html",
+        files:'src/*.html',
         tasks: ['swigtemplates']
       },
       imagefontmin:{
-        files:["src/assets/images/**","src/assets/fonts/**"],
+        files:['src/assets/images/**','src/assets/fonts/**'],
         tasks:['imagefontmin']
       },
       extra:{
-        files:"public/**",
+        files:'public/**',
         task:['copy']
       }
     },
     browserSync: {
-      dev: {
+      options: {
+        notify: false,
+        server: {
+          baseDir: ['dist', 'src', 'public'],
+          routes: {
+            '/node_modules': 'node_modules'
+          }
+        }
+      },
+      dev: { // 开发环境检测文件变化
         bsFiles: {
           src: ['dist/**']
         },
         options: {
-          watchTask: true,
-          server: 'dist/src'
+          watchTask: true
+        }
+      },
+      start: {  // 模拟环境，因生产环境已打包所以不再检测变化
+        bsFiles: {
+          src: 'dist'
+        },
+        options: {
+          watchTask: false
         }
       }
     },
     useref: {
-      html: "dist/**/*.html",
+      html: 'dist/**/*.html',
     },
     htmlmin: {
       dist: {
         options: {
-          removeComments: true,
-          collapseWhitespace: true,
+          removeComments: true,  // 清楚注释
+          collapseWhitespace: true,  // 清楚空格
         },
         files: [
           {
-            expand: true,
-            cwd: "temp",
-            src: "**/*.html",
-            dest: "dist",
+            expand: true,            // 使用当前目录
+            cwd: 'temp',             // 中间文件
+            src: '**/*.html',        // 源文件通配符
+            dest: 'dist',            // 目标目录
           },
         ],
       },
@@ -139,7 +160,7 @@ module.exports = (grunt) => {
     uglify: {
       my_target: {
         files: {
-          "dist/assets/scripts/main.min.js": "temp/assets/scripts/main.js",
+          'dist/assets/scripts/main.min.js': 'temp/assets/scripts/*.js',
         },
       },
     },
@@ -148,31 +169,52 @@ module.exports = (grunt) => {
         files: [
           {
             expand: true,
-            cwd: "temp/assets/styles",
-            src: ["*.css", "!*.min.css"],
-            dest: "dist/assets/styles",
-            ext: ".min.css",
+            cwd: 'temp/assets/styles',
+            src: ['*.css', '!*.min.css'],
+            dest: 'dist/assets/styles',
+            ext: '.min.css',
           },
         ],
       },
     },
   });
 
-  loadGruntTasks(grunt);
+  loadGruntTasks(grunt);  // 注册所有任务
   grunt.loadNpmTasks('grunt-browser-sync');
 
-  grunt.registerTask("imagefontmin", ["imagefontmin"]);
+  //  组合需要抛出的任务（指令）
 
-  grunt.registerTask('serve',['browserSync','watch']);
-  grunt.registerTask('userefPack', ['useref', 'uglify', 'cssmin','htmlmin'])
-  grunt.registerTask("compile", ["sass", "babel", "swigtemplates"]);
-  grunt.registerTask("build", ["clean", "compile", "userefPack","copy"]); //'imagemin',
-  grunt.registerTask("develop", ["compile", "serve"]);
-  grunt.registerTask("lint", ["compile", "serve"]);
-  grunt.registerTask("deploy", ["compile", "serve"]);
-  grunt.registerTask("start", ["compile", "serve"]);
+  grunt.registerTask('compile', [
+    'clean',
+    'sass',
+    'babel',
+    'swigtemplates'
+  ])
 
-  
+  grunt.registerTask('serve', [
+    'compile',
+    'browserSync:dev',
+    'watch'
+  ])
 
+  grunt.registerTask('userefPack', [
+    'useref', 
+    'uglify', 
+    'cssmin',
+    'htmlmin'
+  ])
 
+  grunt.registerTask('build',[
+    'clean',
+    'compile',
+    // 'imagemin',
+    'userefPack',
+    'copy'
+  ])
+
+  grunt.registerTask('start', [
+    'clean',
+    'compile',
+    'browserSync:start'
+  ])
 };
