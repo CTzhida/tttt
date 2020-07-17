@@ -10,6 +10,7 @@ function resolve (dir) {
   return path.join(__dirname, dir)
 }
 
+// 导出配置
 module.exports = {
   mode: 'none',
   entry: path.join(__dirname, './src/main.js'),
