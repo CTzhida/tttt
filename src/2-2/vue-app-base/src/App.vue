@@ -1,19 +1,39 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    {{ dog }}
+    <button @click="handleClick">1</button>
+    <button @click="handleClick2">2</button>
+    <button @click="handleClick3">3</button>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
 export default {
   name: 'App',
-  components: {
-    HelloWorld
+  data () {
+    return {
+      o: 'object',
+      dog: {}
+    }
+  },
+  methods: {
+    handleClick () {
+      this.dog.name = 'Trump'
+    },
+    handleClick2 () {
+      this.$set(this.dog, {
+        name: 'Trump'
+      })
+    },
+    handleClick3 () {
+      this.dog = this.$observable({name: 'Trump'})
+      // this.dog = {
+      //   name: 'Trump'
+      // }
+    }
   }
 }
+
 </script>
 
 <style>

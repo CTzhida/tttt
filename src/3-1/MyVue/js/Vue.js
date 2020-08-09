@@ -3,6 +3,7 @@ class Vue {
     // 1. 通过属性保存选项的数据
     this.$options = options || {}
     this.$data= options.data || {}
+    this.$methods = options.methods || {}
     this.$el = typeof options.el === 'string' ? document.querySelector(options.el) : options.el 
     // 2. 吧data中的成员转换成getter和setter,注入到vue实例中
     this._proxyData(this.$data)

@@ -48,10 +48,17 @@ class Compiler {
       }
     })
   }
-
+  // 修改updater适配v-on:event
   updater (node, key, attrName) {
+    // 其他指令的value值
+    let value = this.vm[key]
+    if(attrName.startsWith('on')) {
+      // 提取on指令的事件名称
+      value  = attrName.replace('on:', '')
+      attrName = 'on'
+    }
     let updateFn = this[attrName + 'Updater']
-    updateFn && updateFn.call(this, node, this.vm[key], key)
+    updateFn && updateFn.call(this, node,value, key)
   }
 
   textUpdater (node, value, key) {
@@ -69,6 +76,53 @@ class Compiler {
     node.addEventListener('input', () => {
       this.vm[key] = node.value
     })
+  }
+
+  // v-html
+  htmlUpdater (node, value, key) {
+    node.innerHTML = value;
+    new Watcher(this.vm, key, (newValue) => {
+      node.innerHTML = newValue
+    })
+  }
+
+  // v-on
+  /**
+   * 
+   * @param node: this.vm 
+   * @param { string } event: 事件名称  
+   * @param { string } method: 事件处理方法 
+   */ 
+  onUpdater (node, event, method) {
+    let argument = ''
+    let reg = /(.+?)\((.+?)\)/;   // 提取小括号前的内容当作方法名称，提取小括号内的内容作为参数
+    if (reg.test(method)) {
+      argument = RegExp.$2.trim()
+      method = RegExp.$1.trim()
+    }
+    argument = argument.split(',')
+    // 判断传入是否函数名称
+    if(/^[^\d]\w+$/.test(method)) {
+      node.addEventListener(event, () => {
+        // 绑定this对象是vue实例
+        this.vm.$methods[method].apply(this.vm, argument)
+      })
+    } else {
+      let index = method.indexOf('=')
+      if (index >= 0) {
+        // 简单处理赋值语句
+        const key = method.substr(0, index).trim()
+        const value = method.substr(index+1).trim()
+        node.addEventListener(event, () => {
+          this.vm[key] = value
+        })
+      } else {
+        node.addEventListener(event, () => {
+          // 使用eval简单执行 
+          eval(key)
+        })
+      }
+    }    
   }
 
   isTextNode (node) {
