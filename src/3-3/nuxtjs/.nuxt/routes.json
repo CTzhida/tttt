@@ -1,0 +1,51 @@
+[
+  {
+    "path": "/",
+    "component": "/Users/chenzhida/Documents/coding/nuxtjs/pages/layout",
+    "children": [
+      {
+        "path": "",
+        "name": "home",
+        "component": "/Users/chenzhida/Documents/coding/nuxtjs/pages/home",
+        "_name": "_1909a8e4"
+      },
+      {
+        "path": "login",
+        "name": "login",
+        "component": "/Users/chenzhida/Documents/coding/nuxtjs/pages/login",
+        "_name": "_0863bc04"
+      },
+      {
+        "path": "register",
+        "name": "register",
+        "component": "/Users/chenzhida/Documents/coding/nuxtjs/pages/login",
+        "_name": "_0863bc04"
+      },
+      {
+        "path": "profile/:username",
+        "name": "profile",
+        "component": "/Users/chenzhida/Documents/coding/nuxtjs/pages/profile",
+        "_name": "_578b9b84"
+      },
+      {
+        "path": "settings",
+        "name": "settings",
+        "component": "/Users/chenzhida/Documents/coding/nuxtjs/pages/settings",
+        "_name": "_2b27e5a8"
+      },
+      {
+        "path": "editor",
+        "name": "editor",
+        "component": "/Users/chenzhida/Documents/coding/nuxtjs/pages/editor",
+        "_name": "_10f02f9c"
+      },
+      {
+        "path": "article/:slug",
+        "name": "article",
+        "component": "/Users/chenzhida/Documents/coding/nuxtjs/pages/article",
+        "_name": "_3e55ded1"
+      }
+    ],
+    "_name": "_0356c1ef"
+  }
+]
