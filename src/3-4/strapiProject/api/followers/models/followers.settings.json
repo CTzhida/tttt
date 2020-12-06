@@ -1,0 +1,27 @@
+{
+  "kind": "collectionType",
+  "collectionName": "followers",
+  "info": {
+    "name": "followers"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true,
+      "unique": false
+    },
+    "htmlUrl": {
+      "type": "string",
+      "required": true
+    },
+    "avatarUrl": {
+      "type": "string",
+      "required": true
+    }
+  }
+}

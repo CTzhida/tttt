@@ -1,4 +1,4 @@
-const { reject } = require("lodash")
+    const { reject } = require("lodash")
 
 /**
  * promise使用： new Promise((resolve, reject) => {}).then(res => {}, e => {}).catch((e) => {}).finally(() => {})

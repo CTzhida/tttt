@@ -1,0 +1,26 @@
+{
+  "kind": "collectionType",
+  "collectionName": "followings",
+  "info": {
+    "name": "following"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "htmlUrl": {
+      "type": "string",
+      "required": true
+    },
+    "avatarUrl": {
+      "type": "string",
+      "required": true
+    }
+  }
+}
